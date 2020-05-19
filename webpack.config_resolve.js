@@ -11,20 +11,23 @@ module.exports = {
     devServer: {
         port: 3000
     },
+    resolveLoader: {
+        modules: ['node_modules', path.resolve(__dirname, './src/loaders')]
+    },
     module: {
         rules: [
             {
                 test: /\.js$/,
                 use: [
                     {
-                        loader: path.resolve(__dirname, './src/loaders/async-replace-loader'),
+                        loader: 'async-replace-loader',
                         options: {
                             targetWord: '你好',
-                            replaceWord: '我也好',
+                            replaceWord: '大家都好',
                         }
                     },
                     {
-                        loader: path.resolve(__dirname, './src/loaders/replace-loader'),
+                        loader: 'replace-loader',
                         options: {
                             targetWord: 'Hello',
                             replaceWord: '你好',

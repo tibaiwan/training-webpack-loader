@@ -1,7 +1,25 @@
-module.exports = function(src) {
-    //src是原文件内容（abcde），下面对内容进行处理，这里是反转
-    console.log('src', src);
-    var result = src.split('').reverse().join(''); //edcba
-    //返回JavaScript源码，必须是String或者Buffer
-    return `module.exports = '${result}'`;
+const loaderUtils = require('loader-utils');
+
+// return 版本
+module.exports = function(source) {
+  const options = loaderUtils.getOptions(this);
+  // this.query 等同于 options
+  console.log('options', options);
+  console.log('this.query', this.query);
+  const reg = new RegExp(options.targetWord, 'g');
+  const result = source.replace(reg, options.replaceWord);
+  // this.callback 等同于 return
+  // return result;
+  this.callback(null, result);
 }
+
+/*
+callback API:
+
+this.callback(
+  err: Error | null,
+  content: string | Buffer,
+  sourceMap?: SourceMap, // 可选参数，返回source-map
+  meta?: any // 可选参数，返回meta
+);
+*/
